@@ -11,6 +11,10 @@ import SourceItemWrapper from './sourceItemWrapper';
 import WikiciteChrome from './wikiciteChrome';
 import Wikidata from './wikidata';
 
+// eslint-disable-next-line sort-imports
+import { Client } from "mocha-remote-client";
+import tests from '../test/test'
+
 const TRANSLATORS_PATH = 'chrome://cita/content/translators/'
 const TRANSLATOR_LABELS = [
     'Wikidata API',
@@ -214,6 +218,17 @@ const zoteroOverlay = {
                 return '';
             }
         }
+
+        console.log(`RUN_TESTS = ${process.env.RUN_TESTS}`);
+        if (process.env.RUN_TESTS){
+            zoteroOverlay.test();
+        }
+    },
+
+    test: function(){
+        // Create a client, which will automatically connect to the server on the default port (8090)
+        // eslint-disable-next-line no-unused-vars
+        const client = new Client(tests);
     },
 
     unload: function() {

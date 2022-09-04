@@ -1,4 +1,5 @@
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -33,7 +34,7 @@ module.exports = {
     }
   },
   optimization: {
-    minimize: false
+    minimize: false,
   },
   devtool: 'inline-source-map',
   externals: {
@@ -68,6 +69,11 @@ module.exports = {
           to: "./chrome/content/Local-Citation-Network/lib"
         }
       ]
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+          'RUN_TESTS': JSON.stringify(process.env.RUN_TESTS)
+      }
+  }),
   ]
 };
